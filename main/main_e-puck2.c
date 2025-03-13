@@ -12,7 +12,7 @@
 #include <string.h>
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
-#include "freertos/xtensa_api.h"
+#include <xtensa_api.h>
 #include "freertos/queue.h"
 #include "freertos/event_groups.h"
 #include "esp_attr.h"   

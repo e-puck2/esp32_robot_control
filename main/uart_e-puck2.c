@@ -155,7 +155,7 @@ void advsercom_task(void *pvParameter) {
 				len = uart_tx_chars(UART_407, (char*)&uart_tx_buff[0], UART_TX_BUFF_SIZE);
 				//printf("sending...\r\n");
 				//uart_wait_tx_done(UART_407, portMAX_DELAY);	
-				if(uart_wait_tx_done(UART_407, 100/portTICK_RATE_MS) != ESP_OK) {
+				if(uart_wait_tx_done(UART_407, 100/portTICK_PERIOD_MS) != ESP_OK) {
 					//printf("error on tx done!\r\n");
 					break;
 				}
@@ -166,13 +166,13 @@ void advsercom_task(void *pvParameter) {
 			case 1: // Receive sensors data.	
 				//rgb_led2_gpio_set(0, 1, 0);
 				// Read the expected bytes from the requests previously made.
-				len = uart_read_bytes(UART_407, uart_rx_buff_curr->data, RESPONSE_SIZE, 50/portTICK_RATE_MS);
+				len = uart_read_bytes(UART_407, uart_rx_buff_curr->data, RESPONSE_SIZE, 50/portTICK_PERIOD_MS);
 					
 				// Flush the input buffer in case more data than expected are received.
 				flush_len = 0;
 				flush_tot_len = 0;
 				while(1) {
-					flush_len = uart_read_bytes(UART_407, &flush_byte, 1, 5/portTICK_RATE_MS);
+					flush_len = uart_read_bytes(UART_407, &flush_byte, 1, 5/portTICK_PERIOD_MS);
 					if(flush_len == 0) {
 						break;
 					}

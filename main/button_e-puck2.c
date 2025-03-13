@@ -10,7 +10,7 @@ Functions to configure and use the button through interruption
 #include "driver/gpio.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
-#include "freertos/xtensa_api.h"
+#include <xtensa_api.h>
 #include "freertos/queue.h"
 #include "freertos/event_groups.h"
 #include "main_e-puck2.h"
@@ -99,7 +99,7 @@ void button_task(void *pvParameter) {
 void button_init(void){
   gpio_config_t io_conf;
   //interrupt of falling edge
-  io_conf.intr_type = GPIO_PIN_INTR_NEGEDGE; //GPIO_PIN_INTR_DISABLE;//GPIO_PIN_INTR_NEGEDGE;
+  io_conf.intr_type = GPIO_INTR_NEGEDGE; //GPIO_INTR_DISABLE;
   //bit mask of the pins
   io_conf.pin_bit_mask = ((uint64_t)1 << BUTTON_GPIO);
   //set as input mode    

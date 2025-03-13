@@ -17,6 +17,7 @@ Functions to control the RGB LEDs connected of the ESP32 of the E-Puck 2
 #include "freertos/FreeRTOS.h"
 #include "freertos/event_groups.h"
 #include "freertos/task.h"
+#include "driver/gpio.h"
 
 #define INTR_NO_FLAG  0
 
@@ -449,40 +450,46 @@ void rgb_stop_pwm(void) {
 			ledc_stop(led_config[rgb_led][led].speed_mode, led_config[rgb_led][led].channel, 1);
 		}
 	}
-	
-	gpio_pad_select_gpio(RGB_LED2_RED_GPIO);
-	gpio_set_direction(RGB_LED2_RED_GPIO, GPIO_MODE_OUTPUT);
-	gpio_pad_select_gpio(RGB_LED2_GREEN_GPIO);
-	gpio_set_direction(RGB_LED2_GREEN_GPIO, GPIO_MODE_OUTPUT);
-	gpio_pad_select_gpio(RGB_LED2_BLUE_GPIO);
-	gpio_set_direction(RGB_LED2_BLUE_GPIO, GPIO_MODE_OUTPUT); 
+
+  gpio_config_t io_conf;
+
+  io_conf.pin_bit_mask = (1ULL << RGB_LED2_RED_GPIO); // Select the GPIO pin
+  io_conf.mode = GPIO_MODE_OUTPUT;                    // Set as output mode
+  io_conf.pull_up_en = GPIO_PULLUP_DISABLE;           // Disable pull-up
+  io_conf.pull_down_en = GPIO_PULLDOWN_DISABLE;       // Disable pull-down
+  io_conf.intr_type = GPIO_INTR_DISABLE;              // Disable interrupts
+  gpio_config(&io_conf);
+  io_conf.pin_bit_mask = (1ULL << RGB_LED2_GREEN_GPIO); // Select the GPIO pin
+  gpio_config(&io_conf);
+  io_conf.pin_bit_mask = (1ULL << RGB_LED2_BLUE_GPIO); // Select the GPIO pin
+  gpio_config(&io_conf);
 	gpio_set_level(RGB_LED2_RED_GPIO, 1);
 	gpio_set_level(RGB_LED2_GREEN_GPIO, 1);
 	gpio_set_level(RGB_LED2_BLUE_GPIO, 1);
-	gpio_pad_select_gpio(RGB_LED4_RED_GPIO);
-	gpio_set_direction(RGB_LED4_RED_GPIO, GPIO_MODE_OUTPUT);
-	gpio_pad_select_gpio(RGB_LED4_GREEN_GPIO);
-	gpio_set_direction(RGB_LED4_GREEN_GPIO, GPIO_MODE_OUTPUT);
-	gpio_pad_select_gpio(RGB_LED4_BLUE_GPIO);
-	gpio_set_direction(RGB_LED4_BLUE_GPIO, GPIO_MODE_OUTPUT); 
+  io_conf.pin_bit_mask = (1ULL << RGB_LED4_RED_GPIO); // Select the GPIO pin
+  gpio_config(&io_conf);
+  io_conf.pin_bit_mask = (1ULL << RGB_LED4_GREEN_GPIO); // Select the GPIO pin
+  gpio_config(&io_conf);
+  io_conf.pin_bit_mask = (1ULL << RGB_LED4_BLUE_GPIO); // Select the GPIO pin
+  gpio_config(&io_conf);
 	gpio_set_level(RGB_LED4_RED_GPIO, 1);
 	gpio_set_level(RGB_LED4_GREEN_GPIO, 1);
 	gpio_set_level(RGB_LED4_BLUE_GPIO, 1);
-	gpio_pad_select_gpio(RGB_LED6_RED_GPIO);
-	gpio_set_direction(RGB_LED6_RED_GPIO, GPIO_MODE_OUTPUT);
-	gpio_pad_select_gpio(RGB_LED6_GREEN_GPIO);
-	gpio_set_direction(RGB_LED6_GREEN_GPIO, GPIO_MODE_OUTPUT);
-	gpio_pad_select_gpio(RGB_LED6_BLUE_GPIO);
-	gpio_set_direction(RGB_LED6_BLUE_GPIO, GPIO_MODE_OUTPUT); 
+  io_conf.pin_bit_mask = (1ULL << RGB_LED6_RED_GPIO); // Select the GPIO pin
+  gpio_config(&io_conf);
+  io_conf.pin_bit_mask = (1ULL << RGB_LED6_GREEN_GPIO); // Select the GPIO pin
+  gpio_config(&io_conf);
+  io_conf.pin_bit_mask = (1ULL << RGB_LED6_BLUE_GPIO); // Select the GPIO pin
+  gpio_config(&io_conf);
 	gpio_set_level(RGB_LED6_RED_GPIO, 1);
 	gpio_set_level(RGB_LED6_GREEN_GPIO, 1);
 	gpio_set_level(RGB_LED6_BLUE_GPIO, 1);
-	gpio_pad_select_gpio(RGB_LED8_RED_GPIO);
-	gpio_set_direction(RGB_LED8_RED_GPIO, GPIO_MODE_OUTPUT);
-	gpio_pad_select_gpio(RGB_LED8_GREEN_GPIO);
-	gpio_set_direction(RGB_LED8_GREEN_GPIO, GPIO_MODE_OUTPUT);
-	gpio_pad_select_gpio(RGB_LED8_BLUE_GPIO);
-	gpio_set_direction(RGB_LED8_BLUE_GPIO, GPIO_MODE_OUTPUT); 
+  io_conf.pin_bit_mask = (1ULL << RGB_LED8_RED_GPIO); // Select the GPIO pin
+  gpio_config(&io_conf);
+  io_conf.pin_bit_mask = (1ULL << RGB_LED8_GREEN_GPIO); // Select the GPIO pin
+  gpio_config(&io_conf);
+  io_conf.pin_bit_mask = (1ULL << RGB_LED8_BLUE_GPIO); // Select the GPIO pin
+  gpio_config(&io_conf);
 	gpio_set_level(RGB_LED8_RED_GPIO, 1);
 	gpio_set_level(RGB_LED8_GREEN_GPIO, 1);
 	gpio_set_level(RGB_LED8_BLUE_GPIO, 1);  	
